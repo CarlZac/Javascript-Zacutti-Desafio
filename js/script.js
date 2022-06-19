@@ -3,6 +3,8 @@ async function traerProductos() {
     const respuesta = await fetch('./js/productos.json');
     const data = await respuesta.json();
     renderProductos(data);
+    let cart = localStorage.getItem("cart");
+    !cart && crearCarrito(data);
 }
 
 traerProductos()
@@ -39,9 +41,9 @@ const cargarEventos = () =>{
     }
 }
 
-const crearCarrito = () =>{
+const crearCarrito = (array) =>{
     let cart = [];
-    for (const producto of data){
+    for (const producto of array){
         cart.push({   
             id:producto.id,
             estilo:producto.estilo,
@@ -190,7 +192,3 @@ const renderCarrito = () => {
     }
     eventoBorrar();
 }
-
-//Creación de Carrito
-let cart = localStorage.getItem("cart");
-!cart && crearCarrito();
